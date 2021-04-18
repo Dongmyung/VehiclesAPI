@@ -6,6 +6,8 @@ import com.udacity.vehicles.domain.Location;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -57,11 +59,11 @@ public class CarService {
          *   If it does not exist, throw a CarNotFoundException
          *   Remove the below code as part of your implementation.
          */
-        Car car = null;
-        if (this.repository != null) {
-            car = this.repository.getOne(id);
-        }
-        if (car == null) {
+        Car car;
+        Optional<Car> optionalCar = repository.findById(id);
+        if (optionalCar.isPresent()) {
+            car = optionalCar.get();
+        } else {
             throw new CarNotFoundException("The car is not found.");
         }
 
