@@ -46,4 +46,16 @@ public class PricingService {
                 .multiply(new BigDecimal(5000d)).setScale(2, RoundingMode.HALF_UP);
     }
 
+    /**
+     * Set a new random price for a given vehicle ID.
+     */
+    public static void resetPrice(Long vehicleId) throws PriceException {
+
+        if (!PRICES.containsKey(vehicleId)) {
+            throw new PriceException("Cannot find price for Vehicle " + vehicleId);
+        }
+
+        PRICES.put(vehicleId, new Price("USD", randomPrice(), vehicleId));
+    }
+
 }

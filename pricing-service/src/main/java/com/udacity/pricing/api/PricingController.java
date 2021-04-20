@@ -4,10 +4,7 @@ import com.udacity.pricing.domain.price.Price;
 import com.udacity.pricing.service.PriceException;
 import com.udacity.pricing.service.PricingService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -30,6 +27,19 @@ public class PricingController {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Price Not Found", ex);
         }
+    }
 
+    /**
+     * Resets the price for a requested vehicle.
+     * @param vehicleId
+     */
+    @DeleteMapping
+    public void reset(@RequestParam Long vehicleId) {
+        try {
+            PricingService.resetPrice(vehicleId);
+        } catch (PriceException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Price Cannot be reset", ex);
+        }
     }
 }

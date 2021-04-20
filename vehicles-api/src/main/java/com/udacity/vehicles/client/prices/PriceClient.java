@@ -48,4 +48,23 @@ public class PriceClient {
         }
         return "(consult price)";
     }
+
+    /**
+     * Reset a new random price in pricing client
+     * @param vehicleId
+     */
+    public void resetPrice(Long vehicleId) {
+        try {
+            client
+                .delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("services/price/")
+                        .queryParam("vehicleId", vehicleId)
+                        .build()
+                )
+                .retrieve().bodyToMono(Void.class).block();
+        } catch (Exception e) {
+            log.error("Unexpected error resetting price for vehicle {}", vehicleId, e);
+        }
+    }
 }

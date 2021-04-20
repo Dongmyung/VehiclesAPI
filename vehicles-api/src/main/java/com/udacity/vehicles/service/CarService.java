@@ -127,6 +127,9 @@ public class CarService {
             throw new CarNotFoundException("The car is not found.");
         }
 
+        // reset new random price for deleted vehicle id
+        priceClient.resetPrice(id);
+
         /**
          * COMPLETED: Delete the car from the repository.
          */
